@@ -1,9 +1,10 @@
 import express, { json } from 'express';
+import cors from 'cors';
 
 let jsonData = [
     {
       "albumId": 1,
-      "id": 1,
+      "id": 2,
       "title": "accusamus beatae ad facilis cum similique qui sunt",
       "url": "https://via.placeholder.com/600/92c952",
       "thumbnailUrl": "https://via.placeholder.com/150/92c952"
@@ -67,6 +68,7 @@ let jsonData = [
 ];
 
 const server = express();
+server.use(cors());
 
 // req is data from the client to the server
 // res is data from the server to the client

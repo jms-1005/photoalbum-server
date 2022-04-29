@@ -3,4 +3,4 @@ GET http://localhost:4400/photosapi
 
 ###
 
-GET http://localhost:4400/photosapi/8
+GET http://localhost:4400/photosapi/1
