@@ -1,5 +1,14 @@
 import express, { json } from 'express';
+import mysql from 'mysql';
 import cors from 'cors';
+
+const db = mysql.createConnection({
+  host: 'localhost',
+  port: 8889,
+  user: 'root',
+  password: 'root',
+  database: 'Employees'
+});
 
 let jsonData = [
     {
@@ -69,6 +78,42 @@ let jsonData = [
 
 const server = express();
 server.use(cors());
+server.use(express.json()); // This tells node to apply json format to all data
+
+db.connect(error => {
+  if(error)
+    console.log('Sorry cannot connect to db: ', error);
+  else  
+    console.log('Connected to mysql db');
+})
+
+server.get('/employeesapi', (req, res) => {
+  //let allEmpSP = "CALL `All_Emp_Data`()";
+  let allEmpSP = "SELECT * FROM Employee"
+  let query = db.query(allEmpSP, (error, data, fields) => {
+    if(error){
+      res.json({ ErrorMessage: error });
+    }
+    else{
+      res.json(data);
+    }
+    
+  })
+})
+
+server.get('/employeessp', (req, res) => {
+  let allEmpSP = "CALL `All_Emp_Data`()";
+  //let allEmpSP = "SELECT * FROM Employee"
+  let query = db.query(allEmpSP, (error, data, fields) => {
+    if(error){
+      res.json({ ErrorMessage: error });
+    }
+    else{
+      res.json(data[0]);
+    }
+    
+  })
+})
 
 // req is data from the client to the server
 // res is data from the server to the client
