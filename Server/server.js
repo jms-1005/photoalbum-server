@@ -113,6 +113,47 @@ server.get('/employeessp', (req, res) => {
     }
     
   })
+});
+
+server.get('/employeesapi/:id', (req, res) => {
+    let emp_id = req.params.id;
+    let empSP = "CALL `One_emp_data`(?)";
+    db.query(empSP, [emp_id], (error, data, fields) => {
+      if(error){
+        res.json({ ErrorMessage: error });
+      }
+      else{
+        res.json(data[0]);
+      }
+    })
+});
+
+server.post('/login', (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  let loginQuery = 'CALL `login`(?, ?)';
+  db.query(loginQuery, [email, password], (error, data) => {
+    if(error){
+      res.json({ ErrorMessage: error});
+    }
+    else{
+      if(data[0].length === 0){
+        res.json({ data: data[0], login: false, message: "Sorry, you have provided wrong credentials"})
+      }
+      else{
+        res.json({ 
+            UserID: data[0].UserID, 
+            email: data[0].email,
+            data: data[0],
+            login: true, 
+            message: "Login successful"});
+            // create the Auth Key
+      }
+
+      
+    }
+  })
+
 })
 
 // req is data from the client to the server

@@ -1,12 +1,36 @@
 
-GET http://localhost:4400/photosapi
+@url = http://localhost:4400
+
+GET {{url}}/photosapi
 
 ###
 
-GET http://localhost:4400/photosapi/1
+GET {{url}}/photosapi/1
 
 ###
-GET http://localhost:4400/employeesapi
+GET {{url}}/employeesapi
 
 ###
-GET http://localhost:4400/employeessp
+GET {{url}}/employeessp
+
+###
+GET {{url}}/employeesapi/3
+
+###
+POST {{url}}/login
+Content-Type: application/json
+
+{
+    "email": "john@vanarts.com0",
+    "password": "654321"
+}
+
+###
+POST {{url}}/signup 
+Content-Type: application/json
+
+{
+    "name": "Bob Smith",
+    "email": "asdfasf",
+    "city": "Surrey"
+}
