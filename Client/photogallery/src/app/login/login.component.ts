@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
       if(loginData.login){
         //Navigate method takes an array. The first element is the path and the rest
         //are parameters
+        console.log(loginData.data[0].UserID);
+        localStorage.setItem("photoUserID", JSON.stringify(loginData.data[0].UserID));
         this.router.navigate(['/photos']);
       }
     })

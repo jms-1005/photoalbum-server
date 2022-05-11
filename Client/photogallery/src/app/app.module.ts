@@ -9,6 +9,8 @@ import { PhotosComponent } from './photos/photos.component';
 import { PhotoDetailsComponent } from './photo-details/photo-details.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { LoginComponent } from './login/login.component';
     PhotosComponent,
     PhotoDetailsComponent,
     EmployeesComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent,
+    UpdateUserComponent
   ],
   imports: [
     BrowserModule,

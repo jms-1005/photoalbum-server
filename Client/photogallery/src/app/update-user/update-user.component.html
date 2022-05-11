@@ -1,3 +1,4 @@
+<h1>Update user</h1>
 <div class="container center login mt-5">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -6,17 +7,13 @@
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input [(ngModel)]="password" type="password" class="form-control" id="exampleInputPassword1">
+    <input [(ngModel)]="password" type="text" class="form-control" id="exampleInputPassword1">
   </div>
   <div class="mb-3 form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1">Check me out</label>
   </div>
-  <button class="btn btn-primary" (click)="login()">Login</button> | <a>Register</a>
-  Forgot Password?
-  <div *ngIf="loginStatus === false" class="error">
-      Your login credentials are incorrect. Please re-enter your email and password
-      <br>
-       Sign up
-    </div>
+  <button class="btn btn-primary" (click)="updateUser()">Update Details</button>
+ <!-- <div *ngIf="signupstatus">Sign up successful. Please log in <a routerLink="/login">here</a></div>
+ <div *ngIf="!signupstatus">Sorry, something went wrong. Server responded with {{ signupmessage.sqlMessage }}</div> -->
 </div>

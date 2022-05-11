@@ -21,7 +21,7 @@ POST {{url}}/login
 Content-Type: application/json
 
 {
-    "email": "john@vanarts.com0",
+    "email": "john@vanarts.com",
     "password": "654321"
 }
 
@@ -30,7 +30,19 @@ POST {{url}}/signup
 Content-Type: application/json
 
 {
-    "name": "Bob Smith",
     "email": "asdfasf",
-    "city": "Surrey"
+    "password": "123"
 }
+
+###
+PUT {{url}}/updateUser
+Content-Type: application/json
+
+{
+    "UserID": 10,
+    "email": "e@e.com",
+    "password": "6543210"
+}
+
+###
+GET {{url}}/user/10
