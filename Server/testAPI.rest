@@ -39,10 +39,10 @@ PUT {{url}}/updateUser
 Content-Type: application/json
 
 {
-    "UserID": 10,
-    "email": "e@e.com",
-    "password": "6543210"
+    "UserID": 3,
+    "email": "b@b.com",
+    "password": "321"
 }
 
 ###
-GET {{url}}/user/10
+GET {{url}}/user/5

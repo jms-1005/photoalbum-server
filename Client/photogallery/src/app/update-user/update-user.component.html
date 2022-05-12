@@ -16,4 +16,6 @@
   <button class="btn btn-primary" (click)="updateUser()">Update Details</button>
  <!-- <div *ngIf="signupstatus">Sign up successful. Please log in <a routerLink="/login">here</a></div>
  <div *ngIf="!signupstatus">Sorry, something went wrong. Server responded with {{ signupmessage.sqlMessage }}</div> -->
+ <div *ngIf="updateStatus">Your details are successfully updated!</div>
+ <div class="errormessage" *ngIf="!updateStatus">Something went wrong. Please try again</div>
 </div>

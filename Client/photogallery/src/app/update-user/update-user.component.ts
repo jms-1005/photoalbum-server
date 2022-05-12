@@ -9,11 +9,16 @@ import { CommonService } from '../services/common.service';
 export class UpdateUserComponent implements OnInit {
   email:string = '';
   password:string = '';
+  updateStatus = true;
 
   constructor(private cs:CommonService) { }
 
   updateUser(){
-
+    let id = localStorage.getItem("photoUserID");
+    this.cs.updateUser(id, this.email, this.password).subscribe( updateConfirmation => {
+      console.log(updateConfirmation.update);
+      this.updateStatus = updateConfirmation.update;
+    })
   }
 
   ngOnInit(): void {
