@@ -157,7 +157,7 @@ server.post('/login', (req, res) => {
 server.post('/signup', (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
-  let query = "CALL `signup1`(?, ?)";
+  let query = "CALL `signup`(?, ?)";
   db.query(query, [email, password], (error, data) =>{
     if(error){
       res.json({ newuser: false, message: error })
@@ -172,7 +172,7 @@ server.put('/updateUser', (req, res) => {
   let userID = req.body.UserID;
   let email = req.body.email;
   let password = req.body.password;
-  let query = "CALL `updateUser`(?, ?, ?)";
+  let query = "CALL `updateUser0`(?, ?, ?)";
   db.query(query, [userID, email, password], (error, data) => {
     if(error){
       res.json({ update: false, message: error });
@@ -182,6 +182,19 @@ server.put('/updateUser', (req, res) => {
     }
   })
 });
+
+server.delete('/deleteuser/:id', (req, res) => {
+  //let userID = req.params.id;
+  let query = "CALL `deleteUser`(?)";
+  db.query(query, [req.params.id], (error, data) => {
+    if(error){
+      res.json({ deleteUser: false, message: error });
+    }
+    else{
+      res.json({ deleteUser: true, message: "User deleted successfully"});
+    }
+  })
+})
 
 server.get('/user/:id', (req, res) => {
   let userID = req.params.id;

@@ -19,6 +19,7 @@ export class CommonService {
   private signupURL = "http://localhost:4400/signup";
   private userURL = "http://localhost:4400/user";
   private updateURL = "http://localhost:4400/updateUser";
+  private deleteURL = "http://localhost:4400/deleteuser";
 
   constructor(private http:HttpClient) { }
 
@@ -49,6 +50,10 @@ export class CommonService {
       "password": password
   }
     return this.http.put<{ update:boolean, message:any  }>(this.updateURL, updateBody);
+  }
+
+  deleteUser(id:any){
+    return this.http.delete<{ deleteUser:boolean, message:any }>(this.deleteURL + "/" + id);
   }
 
 }
