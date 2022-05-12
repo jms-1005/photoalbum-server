@@ -45,4 +45,7 @@ Content-Type: application/json
 }
 
 ###
+DELETE {{url}}/deleteuser/12
+
+###
 GET {{url}}/user/5
