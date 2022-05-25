@@ -1,5 +1,5 @@
 import express, { json } from 'express';
-import mysql from 'mysql';
+// import mysql from 'mysql';
 import cors from 'cors';
 import mysql from 'mysql'; // create an instance
 import multer from 'multer';
