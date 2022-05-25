@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Photo } from '../interfaces/photo.interface';
+import { PhotoTB } from '../interfaces/photo.interface';
 import { PhotoserviceService } from '../services/photoservice.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { PhotoserviceService } from '../services/photoservice.service';
 })
 export class PhotosComponent implements OnInit {
 
-  photos:Photo[] = [];
+  photos:PhotoTB[] = [];
 
   constructor(private ps:PhotoserviceService) { }
 

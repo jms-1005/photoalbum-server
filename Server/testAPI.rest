@@ -5,6 +5,7 @@ GET {{url}}/photosapi
 
 ###
 
+<<<<<<< HEAD
 GET {{url}}/photosapi/1
 
 ###
@@ -49,3 +50,68 @@ DELETE {{url}}/deleteuser/12
 
 ###
 GET {{url}}/user/5
+=======
+GET http://localhost:4400/photosapi/1
+
+### 
+
+POST http://localhost:4400/photosapi
+Content-Type: application/json
+
+{
+    "albumId": 1,
+    "id":10,
+    "title":"New photo test",
+    "url": "URL of the original",
+    "thumbnailUrl": "URL of TB"
+}
+
+###
+PUT http://localhost:4400/photosapi/10
+Content-Type: application/json
+
+{
+    "albumId": 1,
+    "id":10,
+    "title":"Modified TITLE",
+    "url": "https://via.placeholder.com/600/92c952",
+    "thumbnailUrl": "https://via.placeholder.com/150/92c952"
+}
+
+###
+DELETE http://localhost:4400/photosapi/10
+
+###
+GET http://localhost:4400/employees
+
+###
+GET http://localhost:4400/cities
+
+###
+GET http://localhost:4400/employee/1
+
+###
+GET http://localhost:4400/photos
+
+###
+POST http://localhost:4400/photos
+Content-Type: application/json
+
+{
+    "albumId_fromC": 1,
+    "title_fromC": "Spotify Logo",
+    "url_fromC": "Spotify_Logo_RGB_Green.png",
+    "tn_fromC": "tn_Spotify_Logo_RGB_Green.png"
+}
+
+###
+POST http://localhost:4400/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+    
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file_fromC"; filename="tn_Spotify_Logo_RGB_Green.png" 
+Content-Type: image/png
+
+< ./tn_Spotify_Logo_RGB_Green.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+>>>>>>> e32bb06 (added new connection to DB PhotoGallery. Included file upload API endpoint with tests.)

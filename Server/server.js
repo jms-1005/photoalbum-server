@@ -1,6 +1,17 @@
 import express, { json } from 'express';
 import mysql from 'mysql';
 import cors from 'cors';
+import mysql from 'mysql'; // create an instance
+import multer from 'multer';
+//const mysql = require("mysql");
+
+const db = mysql.createConnection({
+  host: 'localhost',
+  port: 8889,
+  user: 'root',
+  password: 'root',
+  database: 'PhotoGallery'
+});
 
 const db = mysql.createConnection({
   host: 'localhost',
@@ -13,7 +24,7 @@ const db = mysql.createConnection({
 let jsonData = [
     {
       "albumId": 1,
-      "id": 2,
+      "id": 1,
       "title": "accusamus beatae ad facilis cum similique qui sunt",
       "url": "https://via.placeholder.com/600/92c952",
       "thumbnailUrl": "https://via.placeholder.com/150/92c952"
@@ -78,6 +89,7 @@ let jsonData = [
 
 const server = express();
 server.use(cors());
+<<<<<<< HEAD
 server.use(express.json()); // This tells node to apply json format to all data
 
 db.connect(error => {
@@ -164,10 +176,46 @@ server.post('/signup', (req, res) => {
     }
     else{
       res.json({ newuser: true, message: "New user added to the db"});
+=======
+server.use(express.json());
+server.use(express.static('uploads'));
+
+db.connect( (error) => {
+  if(error) console.log(error);
+  else console.log('MySQL is connected to Node');
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.originalname)
+  }
+})
+
+const fileupload = multer({ storage: storage});
+
+server.post('/upload', fileupload.single("file_fromC"), (req, res) => {
+  res.json({ fileupload: true });
+});
+
+
+server.get('/photos', (req, res) => {
+  let query = "CALL `getPhotos`()";
+  db.query( query, (error, allphotos ) =>{
+    if(error){
+      res.json({ allphotos:false, message: error });
+    }
+    else{
+      res.json({ allphotos: allphotos[0], message:"returned photos"});
+>>>>>>> e32bb06 (added new connection to DB PhotoGallery. Included file upload API endpoint with tests.)
     }
   })
 });
 
+<<<<<<< HEAD
 server.put('/updateUser', (req, res) => {
   let userID = req.body.UserID;
   let email = req.body.email;
@@ -192,10 +240,21 @@ server.delete('/deleteuser/:id', (req, res) => {
     }
     else{
       res.json({ deleteUser: true, message: "User deleted successfully"});
+=======
+server.post('/photos', (req,res) => {
+  let query = "CALL `addPhoto`(?, ?, ?, ?)";
+  db.query( query, [req.body.albumId_fromC, req.body.title_fromC, req.body.url_fromC, req.body.tn_fromC], (error, newphoto) => {
+    if(error){
+      res.json({ newphoto: false, message: error });
+    }
+    else{
+      res.json({ newphoto: newphoto[0], message:"Photo added to the table"});
+>>>>>>> e32bb06 (added new connection to DB PhotoGallery. Included file upload API endpoint with tests.)
     }
   })
 })
 
+<<<<<<< HEAD
 server.get('/user/:id', (req, res) => {
   let userID = req.params.id;
   let query = "CALL `getUser`(?)";
@@ -213,6 +272,39 @@ server.get('/user/:id', (req, res) => {
     }
   })
 })
+=======
+
+
+// server.get('/employees', (req, res) => {
+//   let query = db.query("SELECT * FROM Employee", (error, data, fields )=>{
+//     if(error) { console.log(error) }
+//     else {
+//       res.json(data);
+//     }
+//   })
+// })
+
+// server.get('/cities', (req, res) => {
+//   let sp = "CALL `All-Places`()";
+//   let query = db.query(sp, (error, data, fields )=>{
+//     if(error) { console.log(error) }
+//     else {
+//       res.json(data);
+//     }
+//   })
+// })
+
+// server.get('/employee/:id', (req, res) => {
+//   let emp_id = req.params.id;
+//   let sp = "CALL `One_emp_data`(?)";
+//   let query = db.query(sp, [emp_id], (error, data, fields ) => {
+//     if(error) { console.log(error) }
+//     else {
+//       res.json(data);
+//     }
+//   })
+// })
+>>>>>>> e32bb06 (added new connection to DB PhotoGallery. Included file upload API endpoint with tests.)
 
 // req is data from the client to the server
 // res is data from the server to the client
@@ -224,6 +316,52 @@ server.get('/photosapi/:photoid', (req, res) => {
     let id_from_client = req.params.photoid;
     res.json(jsonData.find( x => x.id ==  id_from_client ));
 
+});
+
+server.post('/photosapi', (req, res) => {
+  
+    let newPhoto = {
+      albumId: req.body.albumId,
+      id:req.body.id,
+      title: req.body.title,
+      url:req.body.url,
+      thumbnailUrl: req.body.thumbnailUrl
+    }
+
+    // console.log(newPhoto)
+
+    jsonData.push(newPhoto);
+    res.json(newPhoto);
+});
+
+server.put('/photosapi/:id', (req, res) => {
+  let photoindex = jsonData.findIndex( x => x.id == req.params.id);
+  console.log(photoindex);
+  if(photoindex !== -1){
+    let newPhotoData = {
+      albumId: req.body.albumId,
+      id:req.body.id,
+      title: req.body.title,
+      url:req.body.url,
+      thumbnailUrl: req.body.thumbnailUrl
+    }
+    jsonData[photoindex] = newPhotoData;
+    res.json(jsonData[photoindex]);
+  }
+  else
+    res.status(400).json( { message: "There is no photo with ID: " + req.params.id})
+  
+})
+
+server.delete('/photosapi/:id', (req, res) =>{
+  let photoindex = jsonData.findIndex( x => x.id == req.params.id);
+  if(photoindex !== -1){
+    jsonData.splice(photoindex, 1);
+    res.json({ message: "Photo ID: " + req.params.id + " deleted"});
+  }
+  else  
+    res.status(400).json({ message: "ERROR: Photo ID: " + req.params.id + " not found"});
+  
 })
 
 server.listen(4400, function(){
