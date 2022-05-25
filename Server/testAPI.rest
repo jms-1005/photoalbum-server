@@ -5,52 +5,6 @@ GET {{url}}/photosapi
 
 ###
 
-<<<<<<< HEAD
-GET {{url}}/photosapi/1
-
-###
-GET {{url}}/employeesapi
-
-###
-GET {{url}}/employeessp
-
-###
-GET {{url}}/employeesapi/3
-
-###
-POST {{url}}/login
-Content-Type: application/json
-
-{
-    "email": "john@vanarts.com",
-    "password": "654321"
-}
-
-###
-POST {{url}}/signup 
-Content-Type: application/json
-
-{
-    "email": "asdfasf",
-    "password": "123"
-}
-
-###
-PUT {{url}}/updateUser
-Content-Type: application/json
-
-{
-    "UserID": 3,
-    "email": "b@b.com",
-    "password": "321"
-}
-
-###
-DELETE {{url}}/deleteuser/12
-
-###
-GET {{url}}/user/5
-=======
 GET http://localhost:4400/photosapi/1
 
 ### 
@@ -114,4 +68,3 @@ Content-Type: image/png
 
 < ./tn_Spotify_Logo_RGB_Green.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
->>>>>>> e32bb06 (added new connection to DB PhotoGallery. Included file upload API endpoint with tests.)

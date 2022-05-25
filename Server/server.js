@@ -89,141 +89,86 @@ let jsonData = [
 
 const server = express();
 server.use(cors());
-server.use(express.json()); // This tells node to apply json format to all data
+server.use(express.json());
+server.use(express.static('uploads'));
 
-db.connect(error => {
-  if(error)
-    console.log('Sorry cannot connect to db: ', error);
-  else  
-    console.log('Connected to mysql db');
-})
-
-server.get('/employeesapi', (req, res) => {
-  //let allEmpSP = "CALL `All_Emp_Data`()";
-  let allEmpSP = "SELECT * FROM Employee"
-  let query = db.query(allEmpSP, (error, data, fields) => {
-    if(error){
-      res.json({ ErrorMessage: error });
-    }
-    else{
-      res.json(data);
-    }
-    
-  })
-})
-
-server.get('/employeessp', (req, res) => {
-  let allEmpSP = "CALL `All_Emp_Data`()";
-  //let allEmpSP = "SELECT * FROM Employee"
-  let query = db.query(allEmpSP, (error, data, fields) => {
-    if(error){
-      res.json({ ErrorMessage: error });
-    }
-    else{
-      res.json(data[0]);
-    }
-    
-  })
+db.connect( (error) => {
+  if(error) console.log(error);
+  else console.log('MySQL is connected to Node');
 });
 
-server.get('/employeesapi/:id', (req, res) => {
-    let emp_id = req.params.id;
-    let empSP = "CALL `One_emp_data`(?)";
-    db.query(empSP, [emp_id], (error, data, fields) => {
-      if(error){
-        res.json({ ErrorMessage: error });
-      }
-      else{
-        res.json(data[0]);
-      }
-    })
-});
-
-server.post('/login', (req, res) => {
-  let email = req.body.email;
-  let password = req.body.password;
-  let loginQuery = 'CALL `login`(?, ?)';
-  db.query(loginQuery, [email, password], (error, data) => {
-    if(error){
-      res.json({ ErrorMessage: error});
-    }
-    else{
-      if(data[0].length === 0){
-        res.json({ data: data[0], login: false, message: "Sorry, you have provided wrong credentials"})
-      }
-      else{
-        res.json({ 
-            UserID: data[0].UserID, 
-            email: data[0].email,
-            data: data[0],
-            login: true, 
-            message: "Login successful"});
-            // create the Auth Key
-      }
-    }
-  })
-
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.originalname)
+  }
 })
 
-server.post('/signup', (req, res) => {
-  let email = req.body.email;
-  let password = req.body.password;
-  let query = "CALL `signup`(?, ?)";
-  db.query(query, [email, password], (error, data) =>{
+const fileupload = multer({ storage: storage});
+
+server.post('/upload', fileupload.single("file_fromC"), (req, res) => {
+  res.json({ fileupload: true });
+});
+
+
+server.get('/photos', (req, res) => {
+  let query = "CALL `getPhotos`()";
+  db.query( query, (error, allphotos ) =>{
     if(error){
-      res.json({ newuser: false, message: error })
+      res.json({ allphotos:false, message: error });
     }
     else{
-      res.json({ newuser: true, message: "New user added to the db"});
+      res.json({ allphotos: allphotos[0], message:"returned photos"});
     }
   })
 });
 
-server.put('/updateUser', (req, res) => {
-  let userID = req.body.UserID;
-  let email = req.body.email;
-  let password = req.body.password;
-  let query = "CALL `updateUser0`(?, ?, ?)";
-  db.query(query, [userID, email, password], (error, data) => {
+server.post('/photos', (req,res) => {
+  let query = "CALL `addPhoto`(?, ?, ?, ?)";
+  db.query( query, [req.body.albumId_fromC, req.body.title_fromC, req.body.url_fromC, req.body.tn_fromC], (error, newphoto) => {
     if(error){
-      res.json({ update: false, message: error });
+      res.json({ newphoto: false, message: error });
     }
     else{
-      res.json({ update: true, message: "User successfully updated"});
-    }
-  })
-});
-
-server.delete('/deleteuser/:id', (req, res) => {
-  //let userID = req.params.id;
-  let query = "CALL `deleteUser`(?)";
-  db.query(query, [req.params.id], (error, data) => {
-    if(error){
-      res.json({ deleteUser: false, message: error });
-    }
-    else{
-      res.json({ deleteUser: true, message: "User deleted successfully"});
+      res.json({ newphoto: newphoto[0], message:"Photo added to the table"});
     }
   })
 })
 
-server.get('/user/:id', (req, res) => {
-  let userID = req.params.id;
-  let query = "CALL `getUser`(?)";
-  db.query(query, [userID], (error, data) => {
-    if(error){
-      res.json({ user: false, message: error })
-    }
-    else{
-      if(data[0].length === 0){
-        res.json({ user: false, message: "No user with that ID exists" })
-      }
-      else{
-        res.json({ user: true, message: "User found", userData: data[0]});
-      }
-    }
-  })
-})
+
+
+// server.get('/employees', (req, res) => {
+//   let query = db.query("SELECT * FROM Employee", (error, data, fields )=>{
+//     if(error) { console.log(error) }
+//     else {
+//       res.json(data);
+//     }
+//   })
+// })
+
+// server.get('/cities', (req, res) => {
+//   let sp = "CALL `All-Places`()";
+//   let query = db.query(sp, (error, data, fields )=>{
+//     if(error) { console.log(error) }
+//     else {
+//       res.json(data);
+//     }
+//   })
+// })
+
+// server.get('/employee/:id', (req, res) => {
+//   let emp_id = req.params.id;
+//   let sp = "CALL `One_emp_data`(?)";
+//   let query = db.query(sp, [emp_id], (error, data, fields ) => {
+//     if(error) { console.log(error) }
+//     else {
+//       res.json(data);
+//     }
+//   })
+// })
 
 // req is data from the client to the server
 // res is data from the server to the client
