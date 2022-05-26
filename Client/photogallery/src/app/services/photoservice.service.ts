@@ -7,6 +7,8 @@ import { Photo, PhotoTB } from '../interfaces/photo.interface';
 })
 export class PhotoserviceService {
   private url = "http://localhost:4400/photosapi";
+  private photoURL = "http://localhost:4400/photos";
+  private fileuploadURL = "http://localhost:4400/upload";
 
   constructor(private http:HttpClient) { }
 
@@ -18,8 +20,18 @@ export class PhotoserviceService {
     return this.http.get<Photo>(this.url + "/" + id);
   }
 
-  addNewPhoto(){
+  uploadFile(formdata:any){
+    return this.http.post(this.fileuploadURL, formdata);
+  }
 
+  addNewPhoto(albumId:number, title:string, filename:string){
+    let newphotobody = {
+      "albumId_fromC": albumId,
+      "title_fromC": title,
+      "url_fromC": filename,
+      "tn_fromC": "tn_Spotify_Logo_RGB_Green.png"
+    }
+    return this.http.post<{ newPhoto: [Photo], message: any }>(this.photoURL, newphotobody);
   }
 
 }

@@ -1,6 +1,29 @@
 <div class="album py-5 bg-light">
   <div class="container">
 
+    <div class="row">
+      <div class="col w-50">
+        <div class="mb-3">
+          <label for="albumId" class="form-label">Album ID</label>
+          <input type="text" class="form-control" id="albumId" [(ngModel)]="albumId">
+          <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" [(ngModel)]="title">
+        </div>
+        <div class="mb-3">
+          <label for="file_fromC" class="form-label">Photo</label>
+          <input class="form-control" type="file" id="file_fromC" (change)="trackFile($event)">
+        </div>
+        <!-- <div class="mb-3">
+          <label for="tn_file_fromC" class="form-label">Thumbnail</label>
+          <input class="form-control" type="file" id="tn_file_fromC">
+        </div> -->
+        <button class="btn btn-primary" (click)="addNewPhoto()">Submit</button>
+      </div>
+    </div>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
       <div class="col" *ngFor="let photo of photos">
@@ -19,13 +42,6 @@
           </div>
         </div>
       </div>
-
     </div>
-
-
-
-
-
-
   </div>
 </div>
