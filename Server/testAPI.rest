@@ -71,3 +71,8 @@ Content-Type: image/png
 
 < ./tn_Spotify_Logo_RGB_Green.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+DELETE http://localhost:4400/photos/14
+
+
