@@ -34,4 +34,8 @@ export class PhotoserviceService {
     return this.http.post<{ newphoto: [Photo], message: any }>(this.photoURL, newphotobody);
   }
 
+  deletePhoto(id:number){
+    return this.http.delete<{ delStatus:any, message: any }>(this.photoURL + "/" + id);
+  }
+
 }

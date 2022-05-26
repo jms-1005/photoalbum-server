@@ -38,9 +38,21 @@ export class PhotosComponent implements OnInit {
     })
   }
 
-  deletePhoto(id:number){
+  deletePhoto(id:number, photocard:HTMLElement){
     if(confirm("Are you sure you want to delete?")){
       //we write code to delete the photo
+      this.ps.deletePhoto(id).subscribe( deleteSuccessMessage => {
+        if(deleteSuccessMessage.delStatus === 1){
+          console.log(photocard);
+          photocard.className = 'fadeout';
+          let index = this.photos.findIndex(photo => photo.id === id);
+          console.log(index);
+          setTimeout(() => {
+            this.photos.splice(index, 1);
+          }, 2000);
+        }
+      })
+
     }
 
   }

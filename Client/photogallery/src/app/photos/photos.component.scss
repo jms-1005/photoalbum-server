@@ -11,4 +11,18 @@
   cursor: pointer;
 }
 
+@keyframes fadeout{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}
+
+.fadeout{
+  border: 3px solid red;
+  animation: fadeout 2s;
+}
+
 

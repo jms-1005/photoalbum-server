@@ -3,6 +3,7 @@ import express, { json } from 'express';
 import cors from 'cors';
 import mysql from 'mysql'; // create an instance
 import multer from 'multer';
+import fs from 'fs';
 //const mysql = require("mysql");
 
 const db = mysql.createConnection({
@@ -148,6 +149,46 @@ server.post('/photos', (req,res) => {
       res.json({ newphoto: newphoto[0], message:"Photo added to the table"});
     }
   })
+});
+
+server.delete('/photos/:id', (req, res) => {
+  let query = "CALL `deletePhoto`(?)";
+  let getFilename = "CALL `getPhotoByID`(?)";
+
+  db.query( getFilename, [req.params.id], (error, data) =>{
+    //res.json(data[0][0].url);
+    if(error){
+
+    }
+    else{
+      let file_to_be_deleted = data[0][0].url;
+      fs.unlink('./uploads/'+file_to_be_deleted, (error) =>{
+        if(error){
+          res.json({ delStatus: false, message: error});
+        }
+        else{
+          db.query(query, [req.params.id], (error, deleteStatus) =>{
+            if(error){
+              res.json({ delStatus: false, message: error });
+            }
+            else{
+              let del_success = deleteStatus[0][0].DEL_SUCCESS;
+              if(del_success === 1){
+                res.json({ delStatus: del_success, message:"Successfully Deleted" });
+              }
+              else{
+                res.json({ delStatus: del_success, message: "ID not found" });
+              }
+              
+            }
+          })
+        }
+      })
+    }
+    
+  })
+  
+  
 })
 
 
