@@ -48,6 +48,9 @@ GET http://localhost:4400/employee/1
 GET http://localhost:4400/photos
 
 ###
+GET http://localhost:4400/photos/12
+
+###
 POST http://localhost:4400/photos
 Content-Type: application/json
 

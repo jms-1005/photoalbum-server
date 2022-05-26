@@ -24,7 +24,7 @@ export class PhotoDetailsComponent implements OnInit {
     //this.router.navigate(['/']);
 
     this.ps.getPhotoById(id).subscribe( photo => {
-      this.photo = photo;
+      this.photo = photo.photo;
     });
 
 

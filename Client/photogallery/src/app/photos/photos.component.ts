@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PhotoTB } from '../interfaces/photo.interface';
+import { Photo, PhotoTB } from '../interfaces/photo.interface';
 import { PhotoserviceService } from '../services/photoservice.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { PhotoserviceService } from '../services/photoservice.service';
 })
 export class PhotosComponent implements OnInit {
 
-  photos:PhotoTB[] = [];
-  fileupload:any;
+  photos:any[] = [];
+  myformdata:any;
   albumId:number = 0;
   title:string = '';
   filename:string = '';
@@ -24,20 +24,32 @@ export class PhotosComponent implements OnInit {
     console.log("MY FILE -->", myfile);
     const formdata = new FormData();
     formdata.append("file_fromC", myfile, myfile.name);
-    this.fileupload = formdata;
+    this.myformdata = formdata;
   }
 
   addNewPhoto(){
     //console.log(this.albumId, this.title, this.filename);
     this.ps.addNewPhoto(this.albumId, this.title, this.filename).subscribe( newphoto =>{
       console.log(newphoto);
+      this.ps.uploadFile(this.myformdata).subscribe( uploadMessage =>{
+        console.log(uploadMessage);
+        this.photos.unshift(newphoto.newphoto[0]);
+      })
     })
+  }
+
+  deletePhoto(id:number){
+    if(confirm("Are you sure you want to delete?")){
+      //we write code to delete the photo
+    }
+
   }
 
   ngOnInit(): void {
     //this.photos = this.jsonData;
     this.ps.getAllPhotos().subscribe( photos => {
-      this.photos = photos;
+      this.photos = photos.allphotos;
+      console.log(this.photos);
     });
   }
 

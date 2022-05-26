@@ -13,11 +13,11 @@ export class PhotoserviceService {
   constructor(private http:HttpClient) { }
 
   getAllPhotos(){
-    return this.http.get<PhotoTB[]>(this.url);
+    return this.http.get<{allphotos: [ Photo[] ], message: any }>(this.photoURL);
   }
 
   getPhotoById(id:number){
-    return this.http.get<Photo>(this.url + "/" + id);
+    return this.http.get<{ photo: Photo, message:any }>(this.photoURL + "/" + id);
   }
 
   uploadFile(formdata:any){
@@ -31,7 +31,7 @@ export class PhotoserviceService {
       "url_fromC": filename,
       "tn_fromC": "tn_Spotify_Logo_RGB_Green.png"
     }
-    return this.http.post<{ newPhoto: [Photo], message: any }>(this.photoURL, newphotobody);
+    return this.http.post<{ newphoto: [Photo], message: any }>(this.photoURL, newphotobody);
   }
 
 }

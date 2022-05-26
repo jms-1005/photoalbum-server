@@ -126,6 +126,18 @@ server.get('/photos', (req, res) => {
   })
 });
 
+server.get('/photos/:photoid', (req, res) => {
+  let query = "CALL `getPhotoByID`(?)";
+  db.query( query, [req.params.photoid], (error, photo ) =>{
+    if(error){
+      res.json({ photo: false, message: error });
+    }
+    else{
+      res.json({ photo: photo[0][0], message: "Returned photo by ID"});
+    }
+  })
+})
+
 server.post('/photos', (req,res) => {
   let query = "CALL `addPhoto`(?, ?, ?, ?)";
   db.query( query, [req.body.albumId_fromC, req.body.title_fromC, req.body.url_fromC, req.body.tn_fromC], (error, newphoto) => {
