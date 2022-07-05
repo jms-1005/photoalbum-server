@@ -11,6 +11,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { PrintnameComponent } from './printname/printname.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { UpdateUserComponent } from './update-user/update-user.component';
     EmployeesComponent,
     LoginComponent,
     SignupComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    PrintnameComponent
   ],
   imports: [
     BrowserModule,

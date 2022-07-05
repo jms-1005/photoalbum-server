@@ -14,6 +14,8 @@ export class PhotosComponent implements OnInit {
   albumId:number = 0;
   title:string = '';
   filename:string = '';
+  myname = "John F Kennedy";
+  textcolor = "purple";
 
   constructor(private ps:PhotoserviceService) { }
 

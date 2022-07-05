@@ -4,14 +4,23 @@ import cors from 'cors';
 import mysql from 'mysql'; // create an instance
 import multer from 'multer';
 import fs from 'fs';
+import 'dotenv/config';
 //const mysql = require("mysql");
 
+// const db = mysql.createConnection({
+//   host: 'localhost',
+//   port: 8889,
+//   user: 'root',
+//   password: 'root',
+//   database: 'PhotoGallery'
+// });
+
 const db = mysql.createConnection({
-  host: 'localhost',
-  port: 8889,
-  user: 'root',
-  password: 'root',
-  database: 'PhotoGallery'
+  host: process.env.DBHOST,
+  port: process.env.DBPORT,
+  user: process.env.DBUSER,
+  password: process.env.DBPASSWORD,
+  database: process.env.DBDATABASE
 });
 
 // const db = mysql.createConnection({
@@ -282,6 +291,6 @@ server.delete('/photosapi/:id', (req, res) =>{
 })
 
 server.listen(4400, function(){
-    console.log('Server is successfully running on port 4400');
+    console.log('Server is successfully running on port 4400', process.env.DBPORT);
 })
 
