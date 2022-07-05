@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  host: 'https://23.3.5.32:4400'
+  name: "Production Env",
+  server: "https://walrus-app-2-abzz5.ondigitalocean.app/"
 };

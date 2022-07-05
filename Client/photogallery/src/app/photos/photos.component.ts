@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Photo, PhotoTB } from '../interfaces/photo.interface';
 import { PhotoserviceService } from '../services/photoservice.service';
 
@@ -8,7 +9,8 @@ import { PhotoserviceService } from '../services/photoservice.service';
   styleUrls: ['./photos.component.scss']
 })
 export class PhotosComponent implements OnInit {
-
+  name_of_env = environment.name;
+  server = environment.server;
   photos:any[] = [];
   myformdata:any;
   albumId:number = 0;

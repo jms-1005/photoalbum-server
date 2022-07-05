@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  host: 'http://localhost:4400',
-  email: "john.manoah@live.com"
+  name: "Dev Env",
+  server: "http://localhost:4400/"
 };
 
 /*

@@ -44,8 +44,11 @@ GET http://localhost:4400/cities
 ###
 GET http://localhost:4400/employee/1
 
-###
+### LOCALHOST
 GET http://localhost:4400/photos
+
+### PRODUCTION
+GET https://walrus-app-2-abzz5.ondigitalocean.app/photos
 
 ###
 GET http://localhost:4400/photos/2
