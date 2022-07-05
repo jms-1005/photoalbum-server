@@ -291,6 +291,6 @@ server.delete('/photosapi/:id', (req, res) =>{
 })
 
 server.listen(4400, function(){
-    console.log('Server is successfully running on port 4400', process.env.DBPORT);
+    console.log('Server is successfully running on port 4400 and connected to MySQL on ', process.env.DBHOST);
 })
 
